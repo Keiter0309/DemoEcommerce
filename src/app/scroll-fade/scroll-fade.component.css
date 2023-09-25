@@ -1,0 +1,9 @@
+/* scroll-fade.component.css */
+.fade-element {
+  opacity: 0;
+  transition: opacity 5s;
+}
+
+.fade-in {
+  opacity: 1;
+}

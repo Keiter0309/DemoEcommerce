@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div class="flex justify-center mt-3">
+<input
+  [(ngModel)]="searchQuery"
+  class="p-2 border border-blue-500 rounded w-1/3 md:w-1/2 min-[375px]:w-1/2 mr-2"
+  placeholder="Search"
+/>
+<button (click)="performSearch()" class="p-2 border border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 ease-in-out text-blue-500 rounded">
+  Search
+</button>
+</div>
+  <app-carousel/>
+  <div *ngIf="filteredProducts.length > 0" class="flex flex-wrap justify-between mx-4 gap-y-4 ">
+    <div  *ngFor=" let product of filteredProducts | paginate: { itemsPerPage: 20, currentPage: p }; " [routerLink]="['/product', product.id]" class=" w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 mb-4 cursor-pointer duration-200 transition-all ease-linear hover:scale-95">
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-2xl">
+        <div class="flex justify-center">
+          <img [src]="product.images" alt="" class="h-36 w-full hover:blur-0 duration-200 transition-all ease-linear hover:scale-110 rounded">
+        </div>
+        <a href="#">
+          <h5 class="mb-2 text-md whitespace-nowrap overflow-hidden font-bold tracking-tight text-gray-900 dark:text-white">{{product.title}}</h5>
+        </a>
+        <a href="">
+          <h5 class="mb-2 text-sm whitespace-nowrap overflow-hidden font-bold tracking-tight text-gray-900">Category: {{product.category.name}}</h5>
+        </a>
+        <a href="" class="text-xl whitespace-nowrap overflow-hidden font-bold tracking-tight text-gray-900 dark:text-white">${{product.price}}</a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
+        <a href="#" [routerLink]="['/product', product.id]" class="inline-flex mr-3 items-center px-3 py-2 text-sm font-medium text-center text-blue-700 hover:text-white border border-blue-700 rounded-lg transition-all duration-200 ease-in-out hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Buy
+        </a>
+        <a href="" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Add To Cart
+          <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+<div *ngIf="filteredProducts.length === 0">
+  <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/a60759ad1dabe909c46a817ecbf71878.png" class="w-1/6 md:w-1/6 m-auto" alt="">
+  <p class="text-5xl min-[375px]:text-2xl text-red-600 text-center text-bold mb-5 font-mono">Nothing Found</p>
+</div>
+<!--Pagination-->
+<div class="flex justify-center">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</body>
+</html>
