@@ -50,7 +50,7 @@
   <p class="text-5xl min-[375px]:text-2xl text-red-600 text-center text-bold mb-5 font-mono">Nothing Found</p>
 </div>
 <!--Pagination-->
-<div class="flex justify-center">
+<div class="flex justify-center" *ngIf="filteredProducts.length > 0">
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 </body>
