@@ -1,6 +1,8 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {initFlowbite} from "flowbite";
 import * as TE from 'tw-elements';
+import {FacebookLoginProvider, SocialAuthService} from "@abacritt/angularx-social-login";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,10 +15,17 @@ export class LoginComponent implements OnInit,AfterViewInit{
   password: string = '';
   passwordError:string = '';
   passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+  user: any;
+  loggedIn:any;
 
-  constructor() {}
+  constructor(private authService: SocialAuthService) {}
   ngOnInit() {
     initFlowbite();
+    this.authService.authState.subscribe((user)=>{
+      this.user = user;
+      console.log(this.user);
+      this.loggedIn = (user != null);
+    })
   }
 
   ngAfterViewInit() {
@@ -41,7 +50,15 @@ export class LoginComponent implements OnInit,AfterViewInit{
     }
 
     if (this.emailError === '' && this.passwordError === '') {
-      console.log('Form submitted successfully');
+      alert('Form submitted successfully');
     }
+  }
+
+  signInWithFB() {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 }

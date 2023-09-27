@@ -20,7 +20,7 @@
 </div>
   <app-carousel/>
   <div *ngIf="filteredProducts.length > 0" class="flex flex-wrap justify-between mx-4 gap-y-4 ">
-    <div  *ngFor=" let product of filteredProducts | paginate: { itemsPerPage: 20, currentPage: p }; " [routerLink]="['/product', product.id]" class=" w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 mb-4 cursor-pointer duration-200 transition-all ease-linear hover:scale-95">
+    <div  *ngFor=" let product of filteredProducts | paginate: { itemsPerPage: 20, currentPage: p };" class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 mb-4 cursor-pointer duration-200 transition-all ease-linear hover:scale-95">
       <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-2xl">
         <div class="flex justify-center">
           <img [src]="product.images" alt="" class="h-36 w-full hover:blur-0 duration-200 transition-all ease-linear hover:scale-110 rounded">
@@ -36,7 +36,7 @@
         <a href="#" [routerLink]="['/product', product.id]" class="inline-flex mr-3 items-center px-3 py-2 text-sm font-medium text-center text-blue-700 hover:text-white border border-blue-700 rounded-lg transition-all duration-200 ease-in-out hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Buy
         </a>
-        <a href="" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <a (click)="addToCart(product)" id="product1" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Add To Cart
           <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

@@ -31,7 +31,6 @@ export class CategoriesDetailsComponent implements OnInit{
       this.route.paramMap.subscribe((params) => {
         this.category = params.get('category');
         this.fakeShopService.getProducts().subscribe((data) => {
-          // Lọc sản phẩm theo chuyên mục
           this.products = data.filter(
             (product) => product.category.name === this.category
           );
@@ -51,14 +50,20 @@ export class CategoriesDetailsComponent implements OnInit{
     }
   }
   performSearch() {
-    if (this.searchQuery || this.selectedCategory !== 'All') {
-      this.filteredProducts = this.allProducts.filter((product) => {
-        const matchCategory = this.selectedCategory === 'All' || product.category.name === this.selectedCategory;
-        const matchKeyword = !this.searchQuery || product.title.toLowerCase().includes(this.searchQuery.toLowerCase());
-        return matchCategory && matchKeyword;
-      });
+    const searchQuery = this.searchQuery.trim().toLowerCase(); // Normalize search query
+
+    if (searchQuery === '' && !this.selectedCategory) {
+      // If both search query and category are empty, show all products
+      this.filteredProducts = this.products;
     } else {
-      this.filteredProducts = this.allProducts;
+      // Filter products based on search query and/or selected category
+      this.filteredProducts = this.products.filter((product) => {
+        const matchesSearchQuery = !searchQuery || product.title.toLowerCase().includes(searchQuery);
+        const matchesCategory = !this.selectedCategory || product.category.name.toLowerCase() === this.selectedCategory.toLowerCase();
+
+        return matchesSearchQuery && matchesCategory;
+      });
     }
   }
+
 }

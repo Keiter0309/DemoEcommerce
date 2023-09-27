@@ -14,7 +14,7 @@
 </div>
 <div *ngIf="filteredProducts.length > 0" class="flex flex-wrap justify-between mx-4 gap-y-4">
   <div
-    *ngFor="let product of products| paginate: { itemsPerPage: 8, currentPage: p }"
+    *ngFor="let product of products | paginate: { itemsPerPage: 8, currentPage: p }"
     [routerLink]="['/product', product.id]"
     class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 mb-4 cursor-pointer duration-200 transition-all ease-linear hover:scale-95"
   >

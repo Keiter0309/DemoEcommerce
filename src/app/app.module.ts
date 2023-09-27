@@ -17,6 +17,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ContactComponent } from './contact/contact.component';
 import { CategoriesDetailsComponent } from './categories-details/categories-details.component';
 import { ScrollFadeComponent } from './scroll-fade/scroll-fade.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import {SocialAuthService, SocialAuthServiceConfig} from "@abacritt/angularx-social-login";
+import {FacebookLoginProvider, GoogleLoginProvider} from "@abacritt/angularx-social-login";
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { ScrollFadeComponent } from './scroll-fade/scroll-fade.component';
     ContactComponent,
     CategoriesDetailsComponent,
     ScrollFadeComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,29 @@ import { ScrollFadeComponent } from './scroll-fade/scroll-fade.component';
     ReactiveFormsModule,
     NgxPaginationModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              ''
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('2245546092316245')
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

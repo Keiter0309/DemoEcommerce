@@ -2,18 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FakeShopService} from "../fake-shop.service";
 import {ActivatedRoute} from "@angular/router";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import {CartServiceService} from "../cart-service.service";
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
-  animations: [
-    trigger('fadeInUp', [
-      transition(':enter', [
-        style({ transform: 'translateY(100%)', opacity: 0 }),
-        animate('500ms', style({ transform: 'translateY(0)', opacity: 1 })),
-      ]),
-    ]),
-  ],
 })
 export class ProductComponent implements OnInit{
   uniqueCategories:string[] = [];
@@ -22,7 +15,8 @@ export class ProductComponent implements OnInit{
   filteredProducts: any[] = [];
   p:number = 1;
   searchQuery: string = '';
-  constructor(private route:ActivatedRoute, private fakeShopService: FakeShopService) {
+  selectedProducts: any[] = [];
+  constructor(private route:ActivatedRoute, private fakeShopService: FakeShopService, private cartService: CartServiceService) {
     for(let i=0; i<=8; i++) {
       this.products.push(`product ${i}`);
     }
@@ -33,7 +27,7 @@ export class ProductComponent implements OnInit{
       this.products = data;
       this.filteredProducts = data;
       this.getUniqueCategories();
-    })
+    });
     // this.route.params.subscribe(params => {
     //   const productId = +params['id'];
     //
@@ -53,16 +47,11 @@ export class ProductComponent implements OnInit{
       );
     }
   }
-
   getUniqueCategories() {
     this.uniqueCategories = [...new Set(this.products.map((product) => product.category.name))];
   }
-
-  scrollOffset = 300; // Điểm bắt đầu hiển thị sản phẩm
-
-  isVisible(index: number): boolean {
-    const scrollTop = window.scrollY;
-    const elementOffset = index * this.scrollOffset; // Điểm bắt đầu hiển thị sản phẩm thứ i
-    return scrollTop >= elementOffset;
+  addToCart(product: any) {
+    this.cartService.addToCart(product);
+    window.alert('Your product has been added to the cart!')
   }
 }
